@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# config
+#-----------------------------------------
+PROJS=(
+    # "proj_name|proj_url|proj_branch"
+    )
+
+
+# const
+PROJ_SEP="|"
+SHELL_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") >/dev/null && pwd)
+WEBROOT=${SHELL_DIR}"/webroot"
+
+
+# error code
+#-----------------------------------------
+ERRCODE_CONFIG=101
+
+
+# func
+#-----------------------------------------
+# 项目代码初始化
+PROJ_HANDLER() {
+    # TODO 优化成并发?
+    for PROJ in ${PROJS[@]}
+    do
+        # 解析项目信息
+        OLD_IFS="$IFS"
+        IFS=${PROJ_SEP}
+        ele=($PROJ)
+        IFS="$OLD_IFS"
+        if [ ${#ele[@]} -ne 3 ];then
+            exit $ERRCODE_CONFIG;
+        fi
+        PROJ_NAME=${ele[0]}
+        PROJ_URL=${ele[1]}
+        PROJ_BRANCH=${ele[2]}
+
+        # 拉取代码 or 更新
+        if [ -d ${WEBROOT}"/"${PROJ_NAME} ]; then
+            cd ${WEBROOT}"/"${PROJ_NAME};
+            git pull;
+        else
+            cd ${WEBROOT};
+            git clone ${PROJ_URL} ${PROJ_NAME} && cd ${WEBROOT}"/"${PROJ_NAME} && git checkout ${PROJ_BRANCH}
+        fi
+    done
+    cd $SHELL_DIR
+}
+
+# run
+#-----------------------------------------
+PROJ_HANDLER

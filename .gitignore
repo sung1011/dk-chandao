@@ -1,0 +1,6 @@
+data/db/mongodb/*
+data/db/redis/*
+data/logs/nginx/*
+data/logs/phpfpm/*
+.vscode
+webroot/

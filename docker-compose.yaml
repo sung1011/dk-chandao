@@ -1,0 +1,66 @@
+version: "3"
+services:
+    tk_nginx:
+        build: nginx
+        image: nginx:tk
+        ports:
+            - 8080:8080
+            - 8081:8081
+            - 443:443
+        volumes:
+            - ./webroot:/webroot
+            - ./test:/test
+            - ./data/logs/nginx:/log
+            - ./nginx/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx/etc/nginx/conf.d:/etc/nginx/conf.d
+        depends_on:
+            - tk_php
+        links:
+            - tk_php
+    tk_php:
+        build: php
+        image: php:tk
+        volumes:
+            - ./webroot:/webroot
+            - ./test:/test
+            - ./data/logs/phpfpm:/log
+            - ./php/etc/php-fpm.conf:/usr/local/etc/php-fpm.conf
+            - ./php/etc/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./php/etc/php/php.ini:/usr/local/etc/php/php.ini
+        depends_on:
+            - tk_mysql
+    tk_mysql:
+        build: mysql
+        image: mysql:tk
+        volumes:
+            - ./data/db/mysql:/data/db
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD:123456
+    # tk_redis:
+    #     build: redis
+    #     image: redis:tk
+    #     volumes:
+    #         - ./data/db/redis:/data
+    #     ports:
+    #         - 6379:6379
+    # tk_composer:
+    #     image: composer
+    #     volumes:
+    #         - ./webroot:/app
+    #     command: install
+    #     depends_on:
+    #         - tk_php
+    # tk_mongodb:
+    #     build: mongo
+    #     image: mongo:tk
+    #     volumes:
+    #         - ./data/db/mongodb:/data/db
+    #         - ./data/logs/mongodb:/log
+    #     ports:
+    #         - 27017:27017
+    #     command: --storageEngine wiredTiger
+    # tk_node:
+    #     build: node
+    #     image: node:tk
