@@ -4,8 +4,8 @@ services:
         build: nginx
         image: nginx:tk
         ports:
-            - 8080:8080
-            - 8081:8081
+            - 9080:8080
+            - 9081:8081
             - 443:443
         volumes:
             - ./webroot:/webroot
@@ -33,7 +33,7 @@ services:
         build: mysql
         image: mysql:tk
         volumes:
-            - ./data/db/mysql:/data/db
+            - ./data/db/mysql:/var/lib/mysql
         ports:
             - 3306:3306
         environment:

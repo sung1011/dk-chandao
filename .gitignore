@@ -1,6 +1,8 @@
 data/db/mongodb/*
 data/db/redis/*
+data/db/mysql/*
 data/logs/nginx/*
 data/logs/phpfpm/*
 .vscode
 webroot/
+.DS_Store
