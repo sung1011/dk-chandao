@@ -1,4 +1,5 @@
-FROM mysql:5.7
+FROM mysql:5.6.47
+# FROM mysql:5.7
 
 LABEL maintainer="tickles"
 
