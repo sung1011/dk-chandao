@@ -1,6 +1,7 @@
 <?php
 /**
- * TO module/statis/control.php
+ * PLACE-TO: module/statis/control.php
+ * EXEC: docker exec dk-chandao_tk_php_1 php /webroot/zentaopms/bin/ztcli '127.0.0.1:9081/?m=statis&f=daily&product=11'
  */
 
 class statis extends control
