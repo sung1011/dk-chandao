@@ -45,8 +45,8 @@ clean:
 	@rm -Rf data/logs/nginx/*
 	@rm -Rf data/logs/phpfpm/*
 	@rm -Rf data/logs/mongodb/*
-	@rm -Rf data/db/redis/*
-	@rm -Rf data/db/mongodb/*
+	# @rm -Rf data/db/redis/*
+	# @rm -Rf data/db/mongodb/*
 	# @rm -Rf data/db/mysql/*
 
 .PHONY: logs
